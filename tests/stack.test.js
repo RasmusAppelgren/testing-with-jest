@@ -24,6 +24,6 @@ test('peek on stack if one element has been removed with pop', () => {
     stack.push("En push")
     stack.push("En till push")
     stack.pop()
-    expect(stack.peek()).toBe("undefined")
+    expect(stack.peek()).toBe("En push")
 })
 

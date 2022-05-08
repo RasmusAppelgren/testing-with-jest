@@ -40,7 +40,7 @@ test('Click the "vad finns överst i stacken?"-button', async () => {
 	let button = await driver.findElement(By.id('peek'));
 	await button.click();
 	let stack = await driver.findElement(By.id('top_of_stack')).getText();
-	expect(stack).toEqual("undefined");
+	expect(stack).toEqual("Bananer");
 });
 
 describe('Click the "poppa till stacken"-button', () => {
