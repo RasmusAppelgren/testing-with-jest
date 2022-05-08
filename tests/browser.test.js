@@ -4,7 +4,7 @@ require('geckodriver');
 const fileUnderTest = 'file://' + __dirname.replace(/ /g, '%20') + '/../dist/index.html';
 const defaultTimeout = 10000;
 let driver;
-jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5; // 5 minuter
+// jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000 * 60 * 5; // 5 minuter
 
 // Det här körs innan vi kör testerna för att säkerställa att Firefox är igång
 beforeAll(async () => {
@@ -32,3 +32,42 @@ describe('Clicking "Pusha till stacken"', () => {
 		await alert.accept();
 	});
 });
+
+// Mina testfall
+
+
+test('Click the "vad finns överst i stacken?"-button', async () => {
+	let button = await driver.findElement(By.id('peek'));
+	await button.click();
+	let stack = await driver.findElement(By.id('top_of_stack')).getText();
+	expect(stack).toEqual("undefined");
+});
+
+describe('Click the "poppa till stacken"-button', () => {
+	it('should open a prompt box', async () => {
+	let button = await driver.findElement(By.id('pop'));
+	await button.click();
+	let alert = await driver.switchTo().alert();
+	await alert.accept();
+	});
+});
+
+
+/*
+Testet nedanför öppnar diaglogrutan om tar input "Kattmat". 
+Sedan kontrolleras att span-elementet med id "top_of_stack" innehåller just detta.
+*/
+
+describe('The input from "pusha till stacken" should equals whats displayed in element top_of_stack"', () => {
+	it('and should open promt window with input field', async () => {
+		let push = await driver.findElement(By.id('push'));
+		await push.click();
+		let alert = await driver.switchTo().alert();
+		await alert.sendKeys("Kattmat");
+		await alert.accept();
+		let field = await driver.findElement(By.id('top_of_stack')).getText();
+		expect(field).toEqual("Kattmat");
+	});
+});
+
+
